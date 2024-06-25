@@ -8,6 +8,7 @@ on:
     paths-ignore:
       - 'java/**'
   workflow_dispatch:
+  workflow_call:
   
 defaults:
   run:
