@@ -1,5 +1,5 @@
-![csharp build](https://github.com/Nagarro-ICAgile-Programming-Template/04-refactoring-bingo/actions/workflows/csharp_build.yml/badge.svg)
-![java build](https://github.com/Nagarro-ICAgile-Programming-Template/04-refactoring-bingo/actions/workflows/java_build.yml/badge.svg)
+![csharp build](../../actions/workflows/csharp_build.yml/badge.svg)
+![java build](../../actions/workflows/java_build.yml/badge.svg)
 
 # Bingo Refactoring Kata
 
