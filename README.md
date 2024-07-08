@@ -1,3 +1,6 @@
+![chsarp build](https://github.com/Nagarro-ICAgile-Programming-Template/04-refactoring-bingo/actions/workflows/csharp_build.yml/badge.svg)
+![java build](https://github.com/Nagarro-ICAgile-Programming-Template/04-refactoring-bingo/actions/workflows/java_build.yml/badge.svg)
+
 # Bingo Refactoring Kata
 
 Can you spot the any code smells? We think you should be able to find
