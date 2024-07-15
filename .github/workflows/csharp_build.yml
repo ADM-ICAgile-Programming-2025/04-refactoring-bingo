@@ -3,12 +3,19 @@
 
 name: .NET build
 
-on: 
+on:
   push:
-    paths-ignore:
-      - 'java/**'
+    paths:
+      - 'csharp/**'
+      - '.github/workflows/csharp_build.yml'
+  pull_request:
+    paths:
+      - 'csharp/**'
+      - '.github/workflows/csharp_build.yml'
   workflow_dispatch:
   
 jobs:
   call-dotnet-job:
     uses: Nagarro-ICAgile-Programming-Template/ci-configuration/.github/workflows/dotnet.yml@main
+    secrets: inherit
+  

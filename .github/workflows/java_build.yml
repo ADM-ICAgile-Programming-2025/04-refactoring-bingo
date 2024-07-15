@@ -8,12 +8,18 @@
 
 name: Java build
 
-on: 
+on:
   push:
-    paths-ignore:
-      - 'csharp/**'
+    paths:
+      - 'java/**'
+      - '.github/workflows/java_build.yml'
+  pull_request:
+    paths:
+      - 'java/**'
+      - '.github/workflows/java_build.yml'
   workflow_dispatch:
   
 jobs:
   call-maven-job:
     uses: Nagarro-ICAgile-Programming-Template/ci-configuration/.github/workflows/maven.yml@main
+    secrets: inherit
