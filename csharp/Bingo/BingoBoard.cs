@@ -1,29 +1,46 @@
-﻿namespace Bingo;
+﻿using System.Windows.Markup;
+
+namespace Bingo;
+
+
+public class Cell
+{
+    public string? Value { get; set; }
+
+    public bool IsInitialized => this.Value is not null;
+
+    public bool IsMarked { get; set; }
+}
 
 public class BingoBoard
 {
-    private string[,] cells;
-    private bool[,] marked;
-
+    private readonly Cell[,] cells;
+    
     public BingoBoard(int width, int height)
     {
-        this.cells = new string[width, height];
-        this.marked = new bool[width, height];
+        this.cells = new Cell[width, height];
+        for (var x = 0; x < width; x++)
+        {
+            for (var y = 0; y < height; y++)
+            {
+                this.cells[x, y] = new Cell();
+            }
+        }
     }
 
-    public void DefineCell(int x, int y, String value)
+    public void DefineCell(int x, int y, string value)
     {
-        if (cells[x, y] == null)
+        if (!cells[x, y].IsInitialized)
         {
-            for (int c = 0; c < cells.GetLength(0); c++)
+            for (var c = 0; c < cells.GetLength(0); c++)
             {
-                for (int r = 0; r < cells.GetLength(1); r++)
+                for (var r = 0; r < cells.GetLength(1); r++)
                 {
-                    if (value.Equals(cells[c, r]))
+                    if (value.Equals(cells[c, r].Value))
                         throw new InvalidOperationException(value + " already present at " + c + "," + r);
                 }
             }
-            cells[x, y] = value;
+            cells[x, y].Value = value;
         }
         else
         {
@@ -33,27 +50,20 @@ public class BingoBoard
 
     public void MarkCell(int x, int y)
     {
-        if (!IsInitialzed())
+        if (!IsInitialized())
         {
             throw new InvalidOperationException("board not initialized");
         }
-        marked[x, y] = true;
+        cells[x, y].IsMarked = true;
     }
 
     public bool IsMarked(int x, int y)
     {
-        return marked[x, y];
+        return cells[x, y].IsMarked;
     }
-
-    public bool IsInitialzed() => this.IsInitialized();
 
     public bool IsInitialized()
     {
-        foreach (string col in cells)
-        {
-            if (col == null)
-                return false;
-        }
-        return true;
+        return cells.Cast<Cell>().All(cell => cell.IsInitialized);
     }
 }

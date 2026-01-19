@@ -18,7 +18,7 @@ public class BingoTestBdd
         var anyValue = "42";
         board = new BingoBoard(1, 1);
         board.DefineCell(0, 0, anyValue);
-        board.IsInitialzed().Should().BeTrue();
+        board.IsInitialized().Should().BeTrue();
     }
 
     [Fact]
@@ -98,7 +98,7 @@ public class BingoTestBdd
     }
 
     private bool BoardInitializeState() {
-        return board.IsInitialzed();
+        return board.IsInitialized();
     }
 
     private void ThenCellIsMarked(int x, int y) {
