@@ -8,7 +8,7 @@ namespace Bingo.Test;
 public class BingoTest
 {
 
-    BingoBoard board;
+    BingoBoard board = null!;
 
     [Fact]
     void AnNewlyCreatedBoardIsNotInitialized()

@@ -28,7 +28,7 @@ public class BingoBoard
             for (int r = 0; r < cells.GetLength(1); r++)
             {
                 if (value.Equals(cells[c, r]))
-                    throw new InvalidOperationException($"{value} already present at ({c},{r})");
+                    throw new InvalidOperationException($"{value} already present at {c},{r}");
             }
         }
     }

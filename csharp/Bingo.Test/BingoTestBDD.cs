@@ -3,13 +3,13 @@ namespace Bingo.Test;
 public class BingoTestBdd
 {
 
-    BingoBoard board;
+    BingoBoard board = null!;
 
     [Fact]
     void AnNewlyCreatedBoardIsNotInitialized()
     {
         GivenBingoBoardOfSize(1, 1);
-        ThenBoardIsNotInitialzed();
+        ThenBoardIsNotInitialized();
     }
 
     [Fact]
@@ -29,7 +29,7 @@ public class BingoTestBdd
         GivenBingoBoardOfSize(1, 2);
         WhenCellIsDefined(0, 0, one);
         WhenCellIsDefined(0, 1, two);
-        ThenBoardIsInitialzed();
+        ThenBoardIsInitialized();
     }
 
     [Fact]
@@ -80,7 +80,7 @@ public class BingoTestBdd
         board = new BingoBoard(width, height);
     }
 
-    private void WhenCellIsDefined(int x, int y, String value) {
+    private void WhenCellIsDefined(int x, int y, string value) {
         board.DefineCell(x, y, value);
     }
 
@@ -88,12 +88,12 @@ public class BingoTestBdd
         board.MarkCell(x, y);
     }
 
-    private void ThenBoardIsNotInitialzed()
+    private void ThenBoardIsNotInitialized()
     {
         BoardInitializeState().Should().BeFalse();
     }
 
-    private void ThenBoardIsInitialzed() {
+    private void ThenBoardIsInitialized() {
         BoardInitializeState().Should().BeTrue();
     }
 
