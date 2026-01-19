@@ -45,7 +45,9 @@ public class BingoBoard
         return marked[x, y];
     }
 
-    public bool IsInitialzed()
+    public bool IsInitialzed() => this.IsInitialized();
+
+    public bool IsInitialized()
     {
         foreach (string col in cells)
         {
