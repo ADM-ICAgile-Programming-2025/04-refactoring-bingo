@@ -2,23 +2,28 @@
 
 public class BingoBoard
 {
-    private string[,] cells;
-    private bool[,] marked;
+    private Cell[,] cells;
 
     public BingoBoard(int width, int height)
     {
-        this.cells = new string[width, height];
-        this.marked = new bool[width, height];
+        this.cells = new Cell[width, height];
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                cells[x, y] = new Cell();
+            }
+        }
     }
 
     public void DefineCell(int x, int y, string value)
     {
-        if (cells[x, y] != null)
+        if (cells[x, y].HasValue)
         {
             throw new InvalidOperationException("cell already defined");
         }
         IsCellValueAlreadyPresent(value);
-        cells[x, y] = value;
+        cells[x, y].SetValue(value);
     }
     
     void IsCellValueAlreadyPresent(string value)
@@ -27,7 +32,7 @@ public class BingoBoard
         {
             for (int r = 0; r < cells.GetLength(1); r++)
             {
-                if (value.Equals(cells[c, r]))
+                if (value.Equals(cells[c, r].Value))
                     throw new InvalidOperationException($"{value} already present at {c},{r}");
             }
         }
@@ -45,7 +50,7 @@ public class BingoBoard
             throw new ArgumentOutOfRangeException($"Position ({x},{y}) is out of bounds");
         }
         
-        marked[x, y] = true;
+        cells[x, y].Mark();
     }
 
     public bool IsMarked(int x, int y)
@@ -54,11 +59,11 @@ public class BingoBoard
         {
             throw new InvalidOperationException("board not initialized");
         }
-        return marked[x, y];
+        return cells[x, y].IsMarked;
     }
 
     public bool IsInitialized()
     {
-        return cells.Cast<string>().All(cell => cell != null);
+        return cells.Cast<Cell>().All(cell => cell.HasValue);
     }
 }
