@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Bingo;
+﻿namespace Bingo;
 
 public class BingoBoard
 {
@@ -28,9 +26,9 @@ public class BingoBoard
         this.VerifyBoundaries(x, y);
         if (!cells[x, y].IsInitialized)
         {
-            for (var c = 0; c < cells.GetLength(0); c++)
+            for (var c = 0; c < width; c++)
             {
-                for (var r = 0; r < cells.GetLength(1); r++)
+                for (var r = 0; r < height; r++)
                 {
                     if (value.Equals(cells[c, r].Value))
                         throw new InvalidOperationException(value + " already present at " + c + "," + r);
