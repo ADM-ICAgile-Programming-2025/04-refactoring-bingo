@@ -16,14 +16,14 @@ public class BingoBoard
         }
     }
 
-    public void DefineCell(int x, int y, string value)
+    public void DefineCell(Cordination cordination, string value)
     {
-        if (cells[x, y].HasValue)
+        if (cells[cordination.x, cordination.y].HasValue)
         {
             throw new InvalidOperationException("cell already defined");
         }
         IsCellValueAlreadyPresent(value);
-        cells[x, y].SetValue(value);
+        cells[cordination.x, cordination.y].SetValue(value);
     }
     
     void IsCellValueAlreadyPresent(string value)

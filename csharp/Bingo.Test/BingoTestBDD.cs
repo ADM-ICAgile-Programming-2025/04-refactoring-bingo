@@ -17,7 +17,7 @@ public class BingoTestBdd
     {
         var anyValue = "42";
         board = new BingoBoard(1, 1);
-        board.DefineCell(0, 0, anyValue);
+        board.DefineCell(new Cordination(0,0), anyValue);
         board.IsInitialized().Should().BeTrue();
     }
 
@@ -27,8 +27,8 @@ public class BingoTestBdd
         var one = "0, 0";
         var two = "0, 1";
         GivenBingoBoardOfSize(1, 2);
-        WhenCellIsDefined(0, 0, one);
-        WhenCellIsDefined(0, 1, two);
+        WhenCellIsDefined(new Cordination(0,0), one);
+        WhenCellIsDefined(new Cordination(0,1), two);
         ThenBoardIsInitialized();
     }
 
@@ -37,8 +37,8 @@ public class BingoTestBdd
     {
         var anyValue = "42";
         GivenBingoBoardOfSize(1, 1);
-        WhenCellIsDefined(0, 0, anyValue);
-        Action secondCall = () => WhenCellIsDefined(0, 0, anyValue);
+        WhenCellIsDefined(new Cordination(0,0), anyValue);
+        Action secondCall = () => WhenCellIsDefined(new Cordination(0,0), anyValue);
         secondCall.Should()
             .Throw<InvalidOperationException>()
             .Where(e => e.Message.Contains("already defined"));
@@ -49,8 +49,8 @@ public class BingoTestBdd
     {
         var anyValue = "42";
         GivenBingoBoardOfSize(2, 2);
-        WhenCellIsDefined(0, 1, anyValue);
-        Action secondCall = () => WhenCellIsDefined(1, 0, anyValue);
+        WhenCellIsDefined(new Cordination(0,1), anyValue);
+        Action secondCall = () => WhenCellIsDefined(new Cordination(1,0), anyValue);
         secondCall.Should()
             .Throw<InvalidOperationException>()
             .WithMessage(anyValue + " already present at 0,1");
@@ -71,7 +71,7 @@ public class BingoTestBdd
     {
         var anyValue = "42";
         GivenBingoBoardOfSize(1, 1);
-        WhenCellIsDefined(0, 0, anyValue);
+        WhenCellIsDefined(new Cordination(0,0), anyValue);
         WhenCellIsMarked(0, 0);
         ThenCellIsMarked(0, 0);
     }
@@ -80,8 +80,8 @@ public class BingoTestBdd
         board = new BingoBoard(width, height);
     }
 
-    private void WhenCellIsDefined(int x, int y, string value) {
-        board.DefineCell(x, y, value);
+    private void WhenCellIsDefined(Cordination cord, string value) {
+        board.DefineCell(cord, value);
     }
 
     private void WhenCellIsMarked(int x, int y) {

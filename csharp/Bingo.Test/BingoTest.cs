@@ -22,7 +22,7 @@ public class BingoTest
     {
         var anyValue = "42";
         board = new BingoBoard(1, 1);
-        board.DefineCell(0, 0, anyValue);
+        board.DefineCell(new Cordination(0,0), anyValue);
         board.IsInitialized().Should().BeTrue();
     }
 
@@ -32,8 +32,8 @@ public class BingoTest
         var one = "0, 0";
         var two = "0, 1";
         board = new BingoBoard(1, 2);
-        board.DefineCell(0, 0, one);
-        board.DefineCell(0, 1, two);
+        board.DefineCell(new Cordination(0,0), one);
+        board.DefineCell(new Cordination(0,1), two);
         board.IsInitialized().Should().BeTrue();
     }
 
@@ -42,8 +42,8 @@ public class BingoTest
     {
         var anyValue = "42";
         board = new BingoBoard(1, 1);
-        board.DefineCell(0, 0, anyValue);
-        Action secondCall = () => board.DefineCell(0, 0, anyValue);
+        board.DefineCell(new Cordination(0,0), anyValue);
+        Action secondCall = () => board.DefineCell(new Cordination(0,0), anyValue);
         secondCall.Should()
             .Throw<InvalidOperationException>()
             .Where(e => e.Message.Contains("already defined"));
@@ -54,8 +54,8 @@ public class BingoTest
     {
         var anyValue = "42";
         board = new BingoBoard(2, 2);
-        board.DefineCell(0, 1, anyValue);
-        Action secondCall = () => board.DefineCell(1, 0, anyValue);
+        board.DefineCell(new Cordination(0,1), anyValue);
+        Action secondCall = () => board.DefineCell(new Cordination(0,1), anyValue);
         secondCall.Should()
             .Throw<InvalidOperationException>()
             .WithMessage(anyValue + " already present at 0,1");
@@ -76,7 +76,7 @@ public class BingoTest
     {
         var anyValue = "42";
         board = new BingoBoard(1, 1);
-        board.DefineCell(0, 0, anyValue);
+        board.DefineCell(new Cordination(0,0), anyValue);
         board.MarkCell(0, 0);
         board.IsMarked(0, 0).Should().BeTrue();
     }
