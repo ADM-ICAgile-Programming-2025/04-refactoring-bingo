@@ -1,6 +1,4 @@
-﻿using System.Reflection.PortableExecutable;
-
-namespace Bingo;
+﻿namespace Bingo;
 
 public class BingoBoard
 {
@@ -23,22 +21,14 @@ public class BingoBoard
     public void DefineCell(Coordinate coordinate, string value)
     {
         this.VerifyBoundaries(coordinate);
-        if (!cells[coordinate.X, coordinate.Y].IsInitialized)
-        {
-            for (var c = 0; c < width; c++)
-            {
-                for (var r = 0; r < height; r++)
-                {
-                    if (value.Equals(cells[c, r].Value))
-                        throw new InvalidOperationException(value + " already present at " + c + "," + r);
-                }
-            }
-            cells[coordinate.X, coordinate.Y].Value = value;
-        }
-        else
+        if (cells[coordinate.X, coordinate.Y].IsInitialized)
         {
             throw new InvalidOperationException("cell already defined");
         }
+       
+        this.CheckExistingValue(value);
+
+        cells[coordinate.X, coordinate.Y].Value = value;
     }
 
     public void MarkCell(int x, int y) => this.MarkCell(new Coordinate(x, y));
@@ -50,6 +40,7 @@ public class BingoBoard
         {
             throw new InvalidOperationException("board not initialized");
         }
+
         cells[coordinate.X, coordinate.Y].IsMarked = true;
     }
 
@@ -71,6 +62,18 @@ public class BingoBoard
         if (coordinate.X >= this.width || coordinate.Y >= this.height)
         {
             throw new IndexOutOfRangeException("Cell position out of board boundaries");
+        }
+    }
+
+    private void CheckExistingValue(string value)
+    {
+        for (var c = 0; c < width; c++)
+        {
+            for (var r = 0; r < height; r++)
+            {
+                if (value.Equals(cells[c, r].Value))
+                    throw new InvalidOperationException(value + " already present at " + c + "," + r);
+            }
         }
     }
 }
