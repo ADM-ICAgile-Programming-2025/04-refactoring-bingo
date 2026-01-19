@@ -1,4 +1,6 @@
-﻿namespace Bingo;
+﻿using System.Drawing;
+
+namespace Bingo;
 
 public class BingoBoard
 {
@@ -11,13 +13,6 @@ public class BingoBoard
         this.width = width;
         this.height = height;
         this.cells = new Cell[width, height];
-        for (var x = 0; x < width; x++)
-        {
-            for (var y = 0; y < height; y++)
-            {
-                this.cells[x, y] = new Cell();
-            }
-        }
     }
 
     private void VerifyBoundaries(int x, int y)
@@ -71,7 +66,7 @@ public class BingoBoard
     }
 }
 
-public class Cell
+public struct Cell
 {
     public string? Value { get; set; }
 
