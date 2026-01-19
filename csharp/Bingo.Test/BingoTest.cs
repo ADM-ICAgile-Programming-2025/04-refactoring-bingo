@@ -55,7 +55,7 @@ public class BingoTest
         var anyValue = "42";
         board = new BingoBoard(2, 2);
         board.DefineCell(new Cordination(0,1), anyValue);
-        Action secondCall = () => board.DefineCell(new Cordination(0,1), anyValue);
+        Action secondCall = () => board.DefineCell(new Cordination(1,0), anyValue);
         secondCall.Should()
             .Throw<InvalidOperationException>()
             .WithMessage(anyValue + " already present at 0,1");
