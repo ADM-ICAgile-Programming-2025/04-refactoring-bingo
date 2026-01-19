@@ -57,7 +57,7 @@ public class BingoBoard
         return marked[x, y];
     }
 
-    private bool IsInitialized()
+    public bool IsInitialized()
     {
         return cells.Cast<string>().All(cell => cell != null);
     }
