@@ -1,4 +1,6 @@
-﻿namespace Bingo;
+﻿using System.Reflection.PortableExecutable;
+
+namespace Bingo;
 
 public class BingoBoard
 {
@@ -13,18 +15,15 @@ public class BingoBoard
         this.cells = new Cell[width, height];
     }
 
-    private void VerifyBoundaries(int x, int y)
-    {
-        if (x >= width || y >= height)
-        {
-            throw new IndexOutOfRangeException("Cell position out of board boundaries");
-        }
-    }
-
     public void DefineCell(int x, int y, string value)
     {
-        this.VerifyBoundaries(x, y);
-        if (!cells[x, y].IsInitialized)
+        this.DefineCell(new Coordinate(x, y), value);
+    }
+
+    public void DefineCell(Coordinate coordinate, string value)
+    {
+        this.VerifyBoundaries(coordinate);
+        if (!cells[coordinate.X, coordinate.Y].IsInitialized)
         {
             for (var c = 0; c < width; c++)
             {
@@ -34,7 +33,7 @@ public class BingoBoard
                         throw new InvalidOperationException(value + " already present at " + c + "," + r);
                 }
             }
-            cells[x, y].Value = value;
+            cells[coordinate.X, coordinate.Y].Value = value;
         }
         else
         {
@@ -42,27 +41,41 @@ public class BingoBoard
         }
     }
 
-    public void MarkCell(int x, int y)
+    public void MarkCell(int x, int y) => this.MarkCell(new Coordinate(x, y));
+
+    public void MarkCell(Coordinate coordinate)
     {
-        this.VerifyBoundaries(x, y);
+        this.VerifyBoundaries(coordinate);
         if (!IsInitialized())
         {
             throw new InvalidOperationException("board not initialized");
         }
-        cells[x, y].IsMarked = true;
+        cells[coordinate.X, coordinate.Y].IsMarked = true;
     }
 
-    public bool IsMarked(int x, int y)
+    public bool IsMarked(int x, int y) => this.IsMarked(new Coordinate(x, y));
+
+    public bool IsMarked(Coordinate coordinate)
     {
-        this.VerifyBoundaries(x, y);
-        return cells[x, y].IsMarked;
+        this.VerifyBoundaries(coordinate);
+        return cells[coordinate.X, coordinate.Y].IsMarked;
     }
 
     public bool IsInitialized()
     {
         return cells.Cast<Cell>().All(cell => cell.IsInitialized);
     }
+
+    private void VerifyBoundaries(Coordinate coordinate)
+    {
+        if (coordinate.X >= this.width || coordinate.Y >= this.height)
+        {
+            throw new IndexOutOfRangeException("Cell position out of board boundaries");
+        }
+    }
 }
+
+public record Coordinate(int X, int Y);
 
 public struct Cell
 {
